@@ -1,6 +1,6 @@
 # 🛡️ Mini-rapport SOC – Elastic SIEM (Redacted)
 
-## 🧾 Executive Summary
+## Executive Summary
 
 Dans ce projet, j’ai conçu et opéré un mini-SOC basé sur Elastic SIEM afin de reproduire un workflow SOC réaliste.  
 J’ai déployé et sécurisé Elasticsearch et Kibana sur Linux, puis intégré des journaux Windows via Winlogbeat.  
@@ -13,7 +13,7 @@ Ce travail démontre une compréhension pratique des opérations SOC et de la d�
 
 ---
 
-## ✅ Recommendations
+## Recommendations
 
 - Mettre en place des règles de corrélation automatiques pour prioriser les séquences à haut risque  
 - Restreindre et surveiller l’usage de PowerShell via des politiques de sécurité adaptées  
@@ -25,7 +25,7 @@ Toutes les données sensibles ont été **anonymisées / redacted** afin de rend
 
 ---
 
-## 🎯 Objectifs
+## Objectifs
 
 - Déployer un SIEM fonctionnel (Elastic Stack)
 - Collecter des logs Windows réels
@@ -35,7 +35,7 @@ Toutes les données sensibles ont été **anonymisées / redacted** afin de rend
 
 ---
 
-## 🧱 Environnement technique
+## Environnement technique
 
 ### Infrastructure
 | Système | Rôle |
@@ -51,7 +51,7 @@ Toutes les données sensibles ont été **anonymisées / redacted** afin de rend
 
 ---
 
-## ⚙️ Installation et mise en place
+## Installation et mise en place
 
 ### 1️⃣ Mise en place du SIEM sur Kali Linux
 
@@ -97,7 +97,7 @@ Ces configurations permettent de détecter des comportements suspects comme :
 
 ---
 
-## 📥 Données collectées
+## Données collectées
 
 ### Principaux événements observés
 
@@ -110,7 +110,7 @@ Ces configurations permettent de détecter des comportements suspects comme :
 
 ---
 
-## 🕒 Timeline de l’incident (scénario simulé)
+## Timeline de l’incident (scénario simulé)
 
 ### 🟡 Étape 1 – Changement de configuration
 - **Event ID 4719**
@@ -130,7 +130,7 @@ Ces configurations permettent de détecter des comportements suspects comme :
 
 ---
 
-## 🔎 Logique de détection
+## Logique de détection
 
 ### Exemple de règle KQL utilisée
 
@@ -151,7 +151,7 @@ Raisonnement SOC :
 
 - L’événement isolé est classé suspect, la séquence augmente la sévérité
 
-## 🧠 Méthodologie SOC appliquée
+## Méthodologie SOC appliquée
 
 Dans ce projet, j’ai appliqué une méthodologie SOC réaliste :
 
@@ -163,13 +163,13 @@ Dans ce projet, j’ai appliqué une méthodologie SOC réaliste :
 
 - Différenciation entre activité légitime et activité suspecte
 
-## 🚨 Évaluation de la sévérité
+## Évaluation de la sévérité
 Scénario	                          |  Sévérité
 PowerShell élevé isolé	               Moyenne
 PowerShell avec commande encodée	     Élevée
 Force brute suivie d’un succès	       Élevée
 
-## 🔄 Nettoyage et remise en état
+## Nettoyage et remise en état
 
 Après les tests, j’ai effectué un rollback complet :
 
@@ -183,7 +183,7 @@ Après les tests, j’ai effectué un rollback complet :
 
 - Cette étape est essentielle pour garantir un environnement propre et maîtrisé.
 
-## 📚 Compétences démontrées
+## Compétences démontrées
 
 - Déploiement et sécurisation d’un SIEM Elastic
 
@@ -199,7 +199,7 @@ Après les tests, j’ai effectué un rollback complet :
 
 - Rédaction de rapport SOC professionnel
 
-## 🏁 Conclusion
+## Conclusion
 
 Ce mini-SOC m’a permis de reproduire un workflow SOC réaliste, depuis l’installation du SIEM jusqu’à l’analyse et la documentation d’événements de sécurité.
 Le projet met l’accent sur le raisonnement SOC, la corrélation et la compréhension du contexte, plutôt que sur la simple lecture de logs bruts.
