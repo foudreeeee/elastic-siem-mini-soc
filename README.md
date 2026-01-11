@@ -1,9 +1,25 @@
 # 🛡️ Mini-rapport SOC – Elastic SIEM (Redacted)
 
-## 📌 Présentation du projet
+## 🧾 Executive Summary
 
-Dans ce projet, j’ai mis en place un **mini Security Operations Center (SOC)** basé sur **Elastic SIEM**, avec pour objectif de comprendre concrètement le fonctionnement d’un SOC :  
-de l’installation du SIEM à la **collecte de journaux**, jusqu’à **l’analyse et la corrélation d’événements de sécurité Windows**.
+Dans ce projet, j’ai conçu et opéré un mini-SOC basé sur Elastic SIEM afin de reproduire un workflow SOC réaliste.  
+J’ai déployé et sécurisé Elasticsearch et Kibana sur Linux, puis intégré des journaux Windows via Winlogbeat.  
+Des audits de sécurité avancés ont été configurés pour collecter des événements critiques liés aux processus et à l’authentification.  
+L’analyse s’est concentrée sur la détection d’exécutions PowerShell élevées et de scénarios de force brute.  
+Les événements ont été corrélés dans le temps afin d’identifier des comportements suspects plutôt que des logs isolés.  
+Chaque détection a été évaluée selon son contexte utilisateur, machine et privilèges.  
+Le projet inclut une phase de rollback complète pour garantir un retour à un état système sain.  
+Ce travail démontre une compréhension pratique des opérations SOC et de la détection orientée comportement.
+
+---
+
+## ✅ Recommendations
+
+- Mettre en place des règles de corrélation automatiques pour prioriser les séquences à haut risque  
+- Restreindre et surveiller l’usage de PowerShell via des politiques de sécurité adaptées  
+- Implémenter des comptes et rôles dédiés pour les agents SIEM (principe du moindre privilège)  
+- Centraliser les logs réseau et Linux afin d’enrichir les corrélations multi-sources  
+- Documenter systématiquement les détections et incidents pour améliorer la maturité SOC
 
 Toutes les données sensibles ont été **anonymisées / redacted** afin de rendre ce rapport publiable sur GitHub.
 
@@ -123,6 +139,7 @@ event.code:4688 and
 process.name:"powershell.exe" and
 process.parent.name:"cmd.exe" and
 winlog.event_data.TokenElevationType:"Type d’élévation de jeton complet (2)"
+```
 
 Raisonnement SOC :
 
@@ -134,7 +151,7 @@ Raisonnement SOC :
 
 - L’événement isolé est classé suspect, la séquence augmente la sévérité
 
-🧠 Méthodologie SOC appliquée
+## 🧠 Méthodologie SOC appliquée
 
 Dans ce projet, j’ai appliqué une méthodologie SOC réaliste :
 
@@ -146,13 +163,13 @@ Dans ce projet, j’ai appliqué une méthodologie SOC réaliste :
 
 - Différenciation entre activité légitime et activité suspecte
 
-🚨 Évaluation de la sévérité
+## 🚨 Évaluation de la sévérité
 Scénario	                          |  Sévérité
 PowerShell élevé isolé	               Moyenne
 PowerShell avec commande encodée	     Élevée
 Force brute suivie d’un succès	       Élevée
 
-🔄 Nettoyage et remise en état
+## 🔄 Nettoyage et remise en état
 
 Après les tests, j’ai effectué un rollback complet :
 
@@ -166,7 +183,7 @@ Après les tests, j’ai effectué un rollback complet :
 
 - Cette étape est essentielle pour garantir un environnement propre et maîtrisé.
 
-📚 Compétences démontrées
+## 📚 Compétences démontrées
 
 - Déploiement et sécurisation d’un SIEM Elastic
 
@@ -182,7 +199,7 @@ Après les tests, j’ai effectué un rollback complet :
 
 - Rédaction de rapport SOC professionnel
 
-🏁 Conclusion
+## 🏁 Conclusion
 
 Ce mini-SOC m’a permis de reproduire un workflow SOC réaliste, depuis l’installation du SIEM jusqu’à l’analyse et la documentation d’événements de sécurité.
 Le projet met l’accent sur le raisonnement SOC, la corrélation et la compréhension du contexte, plutôt que sur la simple lecture de logs bruts.
