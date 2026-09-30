@@ -1,49 +1,49 @@
-# 🛡️ Mini-rapport SOC – Elastic SIEM (Redacted)
+# 🛡️ Mini SOC Report – Elastic SIEM (Redacted)
 
 ## Executive Summary
 
-Dans ce projet, j’ai conçu et opéré un mini-SOC basé sur Elastic SIEM afin de reproduire un workflow SOC réaliste.  
-J’ai déployé et sécurisé Elasticsearch et Kibana sur Linux, puis intégré des journaux Windows via Winlogbeat.  
-Des audits de sécurité avancés ont été configurés pour collecter des événements critiques liés aux processus et à l’authentification.  
-L’analyse s’est concentrée sur la détection d’exécutions PowerShell élevées et de scénarios de force brute.  
-Les événements ont été corrélés dans le temps afin d’identifier des comportements suspects plutôt que des logs isolés.  
-Chaque détection a été évaluée selon son contexte utilisateur, machine et privilèges.  
-Le projet inclut une phase de rollback complète pour garantir un retour à un état système sain.  
-Ce travail démontre une compréhension pratique des opérations SOC et de la détection orientée comportement.
+In this project I built and ran a mini-SOC based on Elastic SIEM to reproduce a realistic SOC workflow.  
+I deployed and hardened Elasticsearch and Kibana on Linux, then ingested Windows logs through Winlogbeat.  
+I configured advanced security auditing to collect critical process and authentication events.  
+The analysis focused on detecting elevated PowerShell executions and brute-force scenarios.  
+I correlated events over time to spot suspicious behavior rather than isolated logs.  
+Each detection was assessed by user, machine, and privilege context.  
+The project includes a full rollback phase to return the system to a clean state.  
+This work shows practical understanding of SOC operations and behavior-based detection.
 
 ---
 
 ## Recommendations
 
-- Mettre en place des règles de corrélation automatiques pour prioriser les séquences à haut risque  
-- Restreindre et surveiller l’usage de PowerShell via des politiques de sécurité adaptées  
-- Implémenter des comptes et rôles dédiés pour les agents SIEM (principe du moindre privilège)  
-- Centraliser les logs réseau et Linux afin d’enrichir les corrélations multi-sources  
-- Documenter systématiquement les détections et incidents pour améliorer la maturité SOC
+- Set up automatic correlation rules to prioritize high-risk sequences  
+- Restrict and monitor PowerShell usage through appropriate security policies  
+- Use dedicated accounts and roles for SIEM agents (least privilege)  
+- Centralize network and Linux logs to enrich multi-source correlations  
+- Document every detection and incident to improve SOC maturity
 
-Toutes les données sensibles ont été **anonymisées / redacted** afin de rendre ce rapport publiable sur GitHub.
-
----
-
-## Objectifs
-
-- Déployer un SIEM fonctionnel (Elastic Stack)
-- Collecter des logs Windows réels
-- Comprendre les événements de sécurité (authentification, processus)
-- Mettre en place des **détections SOC basées sur le contexte**
-- Documenter l’analyse comme dans un environnement professionnel
+All sensitive data has been **anonymized / redacted** so this report can be published on GitHub.
 
 ---
 
-## Environnement technique
+## Objectives
+
+- Deploy a working SIEM (Elastic Stack)
+- Collect real Windows logs
+- Understand security events (authentication, processes)
+- Set up **context-based SOC detections**
+- Document the analysis as in a professional environment
+
+---
+
+## Technical environment
 
 ### Infrastructure
-| Système | Rôle |
+| System | Role |
 |------|------|
-| Kali Linux | Serveur SIEM (Elasticsearch, Kibana) |
-| Windows 11 | Poste surveillé |
+| Kali Linux | SIEM server (Elasticsearch, Kibana) |
+| Windows 11 | Monitored host |
 
-### Technologies utilisées
+### Technologies used
 - Elasticsearch
 - Kibana
 - Winlogbeat
@@ -51,88 +51,88 @@ Toutes les données sensibles ont été **anonymisées / redacted** afin de rend
 
 ---
 
-## Installation et mise en place
+## Installation and setup
 
-### 1️⃣ Mise en place du SIEM sur Kali Linux
+### 1️⃣ Setting up the SIEM on Kali Linux
 
-J’ai installé et configuré **Elasticsearch** et **Kibana** sur Kali Linux en utilisant le dépôt officiel Elastic.
+I installed and configured **Elasticsearch** and **Kibana** on Kali Linux using the official Elastic repository.
 
-Les points clés de l’installation :
-- Activation de la sécurité Elastic (HTTPS + authentification)
-- Démarrage et vérification des services
-- Connexion sécurisée à Kibana
-- Vérification du bon fonctionnement du cluster Elasticsearch
+Key installation points:
+- Enabling Elastic security (HTTPS + authentication)
+- Starting and checking the services
+- Secure connection to Kibana
+- Verifying the Elasticsearch cluster is healthy
 
-Le SIEM était prêt à recevoir des logs une fois :
-- Elasticsearch accessible via HTTPS
-- Kibana fonctionnel et authentifié
-
----
-
-### 2️⃣ Configuration du poste Windows
-
-Sur le poste Windows, j’ai installé **Winlogbeat** afin d’envoyer les journaux de sécurité vers Elasticsearch.
-
-Actions réalisées :
-- Installation de Winlogbeat
-- Configuration de la sortie Elasticsearch sécurisée
-- Installation de Winlogbeat comme **service Windows**
-- Vérification de l’envoi des logs dans Kibana
+The SIEM was ready to receive logs once:
+- Elasticsearch was reachable over HTTPS
+- Kibana was working and authenticated
 
 ---
 
-### 3️⃣ Activation des audits de sécurité Windows
+### 2️⃣ Configuring the Windows host
 
-Afin d’obtenir des logs pertinents pour un SOC, j’ai activé des audits avancés :
+On the Windows host I installed **Winlogbeat** to ship the security logs to Elasticsearch.
 
-- **Création de processus** (Event ID 4688)
-- **Journalisation des connexions** (Event ID 4624 / 4625)
-- **Journalisation des changements de stratégie d’audit** (Event ID 4719)
-- Inclusion de la ligne de commande des processus
-
-Ces configurations permettent de détecter des comportements suspects comme :
-- exécutions PowerShell élevées
-- tentatives de force brute
-- changements de configuration de sécurité
+Actions taken:
+- Installing Winlogbeat
+- Configuring the secure Elasticsearch output
+- Installing Winlogbeat as a **Windows service**
+- Verifying logs were arriving in Kibana
 
 ---
 
-## Données collectées
+### 3️⃣ Enabling Windows security auditing
 
-### Principaux événements observés
+To get logs relevant to a SOC, I enabled advanced auditing:
+
+- **Process creation** (Event ID 4688)
+- **Logon logging** (Event ID 4624 / 4625)
+- **Audit policy change logging** (Event ID 4719)
+- Including the process command line
+
+These settings make it possible to detect suspicious behavior such as:
+- elevated PowerShell executions
+- brute-force attempts
+- security configuration changes
+
+---
+
+## Collected data
+
+### Main events observed
 
 | Event ID | Description |
 |------|-----------|
-| 4719 | Modification de la stratégie d’audit |
-| 4688 | Création d’un processus |
-| 4625 | Échec d’authentification |
-| 4624 | Authentification réussie |
+| 4719 | Audit policy change |
+| 4688 | Process creation |
+| 4625 | Authentication failure |
+| 4624 | Successful authentication |
 
 ---
 
-## Timeline de l’incident (scénario simulé)
+## Incident timeline (simulated scenario)
 
-### 🟡 Étape 1 – Changement de configuration
+### 🟡 Step 1 – Configuration change
 - **Event ID 4719**
-- Activation de l’audit de création de processus
-- Événement critique en SOC (changement de politique de sécurité)
+- Process creation auditing enabled
+- Critical event for a SOC (security policy change)
 
-### 🟠 Étape 2 – Exécution PowerShell suspecte
+### 🟠 Step 2 – Suspicious PowerShell execution
 - **Event ID 4688**
-- `powershell.exe` lancé depuis `cmd.exe`
-- Exécution avec élévation de privilèges
-- Outil dual-use, nécessitant une analyse contextuelle
+- `powershell.exe` launched from `cmd.exe`
+- Executed with elevated privileges
+- Dual-use tool that requires contextual analysis
 
-### 🔴 Étape 3 – Tentatives de force brute (scénario)
-- Plusieurs **4625** (échecs)
-- Suivis d’un **4624** (succès)
-- Pattern typique d’une attaque par force brute
+### 🔴 Step 3 – Brute-force attempts (scenario)
+- Several **4625** (failures)
+- Followed by a **4624** (success)
+- Typical pattern of a brute-force attack
 
 ---
 
-## Logique de détection
+## Detection logic
 
-### Exemple de règle KQL utilisée
+### Example KQL rule used
 
 ```kql
 event.code:4688 and
@@ -141,65 +141,65 @@ process.parent.name:"cmd.exe" and
 winlog.event_data.TokenElevationType:"Type d’élévation de jeton complet (2)"
 ```
 
-Raisonnement SOC :
+SOC reasoning:
 
-- PowerShell est un outil légitime mais souvent utilisé en attaque
+- PowerShell is a legitimate tool but often used in attacks
 
-- L’élévation de privilèges augmente le niveau de risque
+- Privilege elevation raises the risk level
 
-- Le parent cmd.exe est fréquemment observé en post-exploitation
+- A cmd.exe parent is frequently seen in post-exploitation
 
-- L’événement isolé est classé suspect, la séquence augmente la sévérité
+- An isolated event is flagged suspicious; the sequence increases the severity
 
-## Méthodologie SOC appliquée
+## SOC methodology applied
 
-Dans ce projet, j’ai appliqué une méthodologie SOC réaliste :
+In this project I applied a realistic SOC methodology:
 
-- Analyse basée sur la corrélation d’événements
+- Analysis based on event correlation
 
-- Raisonnement par séquence, pas par log isolé
+- Reasoning by sequence, not by isolated log
 
-- Priorisation selon le contexte utilisateur / machine
+- Prioritization based on user / machine context
 
-- Différenciation entre activité légitime et activité suspecte
+- Distinguishing legitimate activity from suspicious activity
 
-## Évaluation de la sévérité
-Scénario	                          |  Sévérité
-PowerShell élevé isolé	               Moyenne
-PowerShell avec commande encodée	     Élevée
-Force brute suivie d’un succès	       Élevée
+## Severity assessment
+Scenario	                          |  Severity
+Isolated elevated PowerShell	               Medium
+PowerShell with encoded command	     High
+Brute-force followed by a success	       High
 
-## Nettoyage et remise en état
+## Cleanup and restoration
 
-Après les tests, j’ai effectué un rollback complet :
+After the tests, I performed a full rollback:
 
-- Suppression de Winlogbeat
+- Removing Winlogbeat
 
-- Désactivation des audits avancés
+- Disabling advanced auditing
 
-- Suppression de la journalisation PowerShell
+- Removing PowerShell logging
 
-- Désinstallation d’Elasticsearch et Kibana sur Kali
+- Uninstalling Elasticsearch and Kibana on Kali
 
-- Cette étape est essentielle pour garantir un environnement propre et maîtrisé.
+- This step is essential to guarantee a clean and controlled environment.
 
-## Compétences démontrées
+## Skills demonstrated
 
-- Déploiement et sécurisation d’un SIEM Elastic
+- Deploying and hardening an Elastic SIEM
 
-- Collecte et normalisation de logs Windows
+- Collecting and normalizing Windows logs
 
-- Configuration d’audits de sécurité avancés
+- Configuring advanced security auditing
 
-- Analyse d’événements Windows (4688, 4719, 4625, 4624)
+- Analyzing Windows events (4688, 4719, 4625, 4624)
 
-- Corrélation SOC et raisonnement Blue Team
+- SOC correlation and Blue Team reasoning
 
-- Création de règles de détection (KQL)
+- Writing detection rules (KQL)
 
-- Rédaction de rapport SOC professionnel
+- Writing a professional SOC report
 
 ## Conclusion
 
-Ce mini-SOC m’a permis de reproduire un workflow SOC réaliste, depuis l’installation du SIEM jusqu’à l’analyse et la documentation d’événements de sécurité.
-Le projet met l’accent sur le raisonnement SOC, la corrélation et la compréhension du contexte, plutôt que sur la simple lecture de logs bruts.
+This mini-SOC let me reproduce a realistic SOC workflow, from installing the SIEM through analyzing and documenting security events.
+The project emphasizes SOC reasoning, correlation, and understanding context rather than just reading raw logs.
